@@ -1,3 +1,7 @@
+import SearchBar from './components/SearchBar';
+import PricingFilters from './components/PricingFilters';
+import SortDropdown from './components/SortDropdown';
+import PriceSlider from './components/PriceSlider';
 import './styles/global.css'
 
 const App = () => {
@@ -8,6 +12,10 @@ const App = () => {
         </header>
 
         <div className="filters-section">
+            <SearchBar />
+            <PricingFilters />
+            <SortDropdown />
+            <PriceSlider />
             <div className="filter-actions">
                 <button className="reset-button">Reset Filters</button>
             </div>
