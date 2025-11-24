@@ -223,3 +223,43 @@ body {
     background: #f5f5f5;
     border-color: #bbb;
 }
+
+.content-grid {
+    display: grid;
+    gap: 20px;
+    grid-template-columns: repeat(4, 1fr);
+}
+
+@media (max-width:1200px) {
+    .content-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (max-width:768px) {
+    .content-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width:480px) {
+    .content-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.content-card {
+    background: white;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    transition:
+        transform 0.2s;
+        box-shadow 0.2s;
+    cursor: pointer;
+}
+
+.content-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+}
