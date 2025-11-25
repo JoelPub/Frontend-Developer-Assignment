@@ -6,11 +6,11 @@ const PricingFilters = () => {
     const dispatch = useAppDispatch();
     const selectedOptions = useAppSelector((state) => state.filters.pricingOptions);
 
-    const handleToggle = (option) => {
+    const handleToggle = (option: PricingOption) => {
         dispatch(togglePricingoption(option));
     };
 
-    const isChecked = (option) => selectedOptions.includes(option);
+    const isChecked = (option: PricingOption) => selectedOptions.includes(option);
     return (
         <div className="pricing-filters">
             <h3>Pricing Options</h3>

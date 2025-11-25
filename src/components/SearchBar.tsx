@@ -5,7 +5,7 @@ const SearchBar = () => {
     const dispatch = useAppDispatch();
     const keyword = useAppSelector((state) => state.filters.keyword);
 
-    const handleChange = (e) => {
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         dispatch(setkeyword(e.target.value));
     };
 

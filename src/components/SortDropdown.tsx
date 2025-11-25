@@ -6,8 +6,8 @@ const SortDropdown = () => {
     const dispatch = useAppDispatch();
     const sortBy = useAppSelector((state) => state.filters.sortBy);
 
-    const handleChange = (e) => {
-        dispatch(setSortBy(e.target.value));
+    const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+        dispatch(setSortBy(e.target.value as SortOption));
     };
 
     return (

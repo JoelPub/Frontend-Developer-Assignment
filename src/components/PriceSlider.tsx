@@ -17,22 +17,22 @@ const PriceSlider = () => {
         setMaxValue(priceRange[1]);
     }, [priceRange]);
 
-    const handleMinChange = (e) => {
+    const handleMinChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const value = Math.min(Number(e.target.value), maxValue -1);
         setMinValue(value);
     };
-    const handleMaxChange = (e) => {
+    const handleMaxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const value = Math.max(Number(e.target.value), minValue + 1);
         setMaxValue(value);
     };
 
-    const handleMinInputChange = (e) => {
+    const handleMinInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const value = Math.max(0, Math.min(Number(e.target.value), maxValue - 1));
         setMinValue(value);
         dispatch(setPriceRange([value, maxValue]));
     };
 
-    const handleMaxInputChange = (e) => {
+    const handleMaxInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const value = Math.min(999, Math.max(Number(e.target.value), minValue + 1));
         setMaxValue(value);
         dispatch(setPriceRange([minValue, value]));
