@@ -1,57 +1,57 @@
 import { PricingOption, SortOption } from '../types';
 interface UrlState {
-    pricingOptions?: string[];
-    keyword?: string;
-    sortBy?: SortOption;
-    priceRange?: [number, number];
+  pricingOptions?: PricingOption[];
+  keyword?: string;
+  sortBy?: SortOption;
+  priceRange?: [number, number];
 }
 
-export const serializeStateToUrl = (state: UrlState) => {
-    const params = new URLSearchParams();
+export const serializeStateToUrl = (state: UrlState): string => {
+  const params = new URLSearchParams();
 
-    if (state.pricingOptions && state.pricingOptions.length > 0) {
-        params.set('pricing', state.pricingOptions.join(','));
-    }
+  if (state.pricingOptions && state.pricingOptions.length > 0) {
+    params.set('pricing', state.pricingOptions.join(','));
+  }
 
-    if (state.keyword) {
-        params.set('keyword', state.keyword);
-    }
-    
-    if (state.sortBy && state.sortBy !== SortOption.ITEM_NAME) {
-        params.set('sort', state.sortBy);
-    }
+  if (state.keyword) {
+    params.set('keyword', state.keyword);
+  }
 
-    if (state.priceRange && (state.priceRange[0] !== 0 || state.priceRange[1] !== 999)) {
-        params.set('priceRange', `${state.priceRange[0]}-${state.priceRange[1]}`);
-    }
+  if (state.sortBy && state.sortBy !== SortOption.ITEM_NAME) {
+    params.set('sort', state.sortBy);
+  }
 
-    return params.toString();
-}
+  if (state.priceRange && (state.priceRange[0] !== 0 || state.priceRange[1] !== 999)) {
+    params.set('priceRange', `${state.priceRange[0]}-${state.priceRange[1]}`);
+  }
 
-export const deserialzeStateFromUrl = (search: string): UrlState => {
-    const params = new URLSearchParams(search);
-    const state: UrlState = {};
+  return params.toString();
+};
 
-    const pricingParam = params.get('pricing');
-    if (pricingParam) {
-        state.pricingOptions = pricingParam.split(',') as PricingOption[];
-    }
+export const deserializeStateFromUrl = (search: string): UrlState => {
+  const params = new URLSearchParams(search);
+  const state: UrlState = {};
 
-    const keywordParam = params.get('keyword');
-    if (keywordParam) {
-        state.keyword = keywordParam;
-    }
+  const pricingParam = params.get('pricing');
+  if (pricingParam) {
+    state.pricingOptions = pricingParam.split(',') as PricingOption[];
+  }
 
-    const sortParam = params.get('sort');
-    if (sortParam) {
-        state.sortBy = sortParam as SortOption;
-    }
+  const keywordParam = params.get('keyword');
+  if (keywordParam) {
+    state.keyword = keywordParam;
+  }
 
-    const priceRangeParam = params.get('priceRange');
-    if (priceRangeParam) {
-        const [min, max] = priceRangeParam.split('-').map(Number);
-        state.priceRange = [min, max];
-    }
+  const sortParam = params.get('sort');
+  if (sortParam) {
+    state.sortBy = sortParam as SortOption;
+  }
 
-    return state;
-}
+  const priceRangeParam = params.get('priceRange');
+  if (priceRangeParam) {
+    const [min, max] = priceRangeParam.split('-').map(Number);
+    state.priceRange = [min, max];
+  }
+
+  return state;
+};

@@ -1,10 +1,10 @@
 import { configureStore } from '@reduxjs/toolkit';
-import filterReducer from '../features/filters/filterSlice';
-import contentReducer from '../features/content/contentSlice'
+import filtersReducer from '../features/filters/filtersSlice';
+import contentReducer from '../features/content/contentSlice';
 
 export const store = configureStore({
   reducer: {
-    filters: filterReducer,
+    filters: filtersReducer,
     content: contentReducer,
   },
 });
