@@ -40,3 +40,25 @@ Thumbs.db
 
 # Misc
 *.local
+src/App.js
+src/index.js
+src/components/ContentCard.js
+src/components/ContentList.js
+src/components/PriceSlider.js
+src/components/PricingFilters.js
+src/components/SearchBar.js
+src/components/SkeletonCard.js
+src/components/SortDropdown.js
+src/features/content/contentSlice.js
+src/features/filters/filtersSlice.js
+src/services/api.js
+src/store/hooks.js
+src/store/index.js
+src/types/index.js
+src/utils/filtersUtils.js
+src/utils/urlState.js
+it/playwright-report/index.html
+it/test-results/.last-run.json
+it/playwright-report/data
+it/test-results
+test-output.txt

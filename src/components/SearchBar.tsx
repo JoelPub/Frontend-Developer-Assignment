@@ -15,7 +15,7 @@ const SearchBar = () => {
   const hasChanges = inputValue !== appliedKeyword;
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setInputValue(e.target.value);
+    setInputValue(e.target.value ?? undefined);
   };
 
   const handleSearch = () => {
@@ -52,7 +52,7 @@ const SearchBar = () => {
           data-testid="search-icon"
         >
           <path
-            d="M9 17AB 8 0 1 0 9 1a8 8 0 0 0 0 16zM19 19l-4.35-4.35"
+            d="M9 17A8 8 0 1 0 9 1a8 8 0 0 0 0 16zM19 19l-4.35-4.35"
             stroke="currentColor"
             strokeWidth="2"
             strokeLinecap="round"

@@ -1,30 +1,40 @@
-import { useState, useEffect, useRef, useCallback } from 'react';
+import { useState, useEffect, useRef, useCallback, useMemo } from 'react';
 import { useAppSelector } from '../store/hooks';
-import { applyFiltersAndSort } from '../utils/filterUtils';
 import ContentCard from './ContentCard';
 import SkeletonCard from './SkeletonCard';
+
+import useCustomFilterGroup from './useCustomFilter';
+import useContentSort from './useCustomSort';
 
 const ITEMS_PER_PAGE = 12;
 
 const ContentList = () => {
   const { items, loading, error } = useAppSelector((state) => state.content);
-  const filters = useAppSelector((state) => state.filters);
+  const { filters, sorter } = useAppSelector((state) => state.filters);
 
-  const [displayedItems, setDisplayedItems] = useState<number>(ITEMS_PER_PAGE);
+  const [displayedCount, setDisplayedCount] = useState<number>(ITEMS_PER_PAGE);
   const [isLoadingMore, setIsLoadingMore] = useState(false);
 
   const observerTarget = useRef<HTMLDivElement>(null);
 
-  // Apply filters and sorting
-  const filteredItems = applyFiltersAndSort(
-    items,
-    filters.pricingOptions,
-    filters.keyword,
-    filters.sortBy,
-    filters.priceRange
-  );
+  // Apply filters & sorting
+  const filteredItems = useCustomFilterGroup(items, filters);
+  const { sortedItems } = useContentSort(filteredItems, sorter);
 
-  const hasMore = displayedItems < filteredItems.length;
+  // const filteredItems = useMemo(() => {
+  //   return applyFiltersAndSort(
+  //     items,
+  //     filters.pricingOptions,
+  //     filters.keyword,
+  //     filters.sortBy,
+  //     filters.priceRange
+  //   )
+  // }, [items, filters]);
+
+  const hasMore = useMemo(
+    () => displayedCount < filteredItems.length,
+    [displayedCount, filteredItems.length]
+  );
 
   // Intersection Observer callback
   const handleObserver = useCallback(
@@ -34,7 +44,7 @@ const ContentList = () => {
         setIsLoadingMore(true);
         // Simulate loading delay for better UX
         setTimeout(() => {
-          setDisplayedItems((prev) => Math.min(prev + ITEMS_PER_PAGE, filteredItems.length));
+          setDisplayedCount((prev) => Math.min(prev + ITEMS_PER_PAGE, filteredItems.length));
           setIsLoadingMore(false);
         }, 500);
       }
@@ -64,7 +74,7 @@ const ContentList = () => {
 
   // Reset displayed items when filters change
   useEffect(() => {
-    setDisplayedItems(ITEMS_PER_PAGE);
+    setDisplayedCount(ITEMS_PER_PAGE);
   }, [filters]);
 
   if (loading && items.length === 0) {
@@ -95,7 +105,7 @@ const ContentList = () => {
     );
   }
 
-  const itemsToDisplay = filteredItems.slice(0, displayedItems);
+  const itemsToDisplay = sortedItems.slice(0, displayedCount);
   return (
     <>
       <div className="content-grid" data-testid="content-grid">

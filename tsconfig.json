@@ -1,0 +1,14 @@
+
+{
+    "extends": "@tsconfig/vite-react/tsconfig.json",
+    "compilerOptions": {
+        "verbatimModuleSyntax": false, // to check
+        "erasableSyntaxOnly": false, // to check
+        "baseUrl": ".",
+        "paths": {
+            "*": ["src/*"]
+        }
+    },
+    "include": ["src/**/*"], 
+    "exclude": ["node_modules", "dist", "build"]
+}

@@ -1,10 +1,5 @@
+import type { UrlState } from '../types';
 import { PricingOption, SortOption } from '../types';
-interface UrlState {
-  pricingOptions?: PricingOption[];
-  keyword?: string;
-  sortBy?: SortOption;
-  priceRange?: [number, number];
-}
 
 export const serializeStateToUrl = (state: UrlState): string => {
   const params = new URLSearchParams();
@@ -34,7 +29,7 @@ export const deserializeStateFromUrl = (search: string): UrlState => {
 
   const pricingParam = params.get('pricing');
   if (pricingParam) {
-    state.pricingOptions = pricingParam.split(',') as PricingOption[];
+    state.pricingOptions = pricingParam.split(',').map((p) => parseInt(p, 10) as PricingOption);
   }
 
   const keywordParam = params.get('keyword');

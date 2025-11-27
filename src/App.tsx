@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from './store/hooks';
-import { loadContentItems } from './features/content/contentSlice';
+import { loadApiItems } from './features/content/contentSlice';
 import { resetFilters, setFiltersFromUrl } from './features/filters/filtersSlice';
 import { serializeStateToUrl, deserializeStateFromUrl } from './utils/urlState';
 import SearchBar from './components/SearchBar';
@@ -8,7 +8,7 @@ import PricingFilters from './components/PricingFilters';
 import SortDropdown from './components/SortDropdown';
 import PriceSlider from './components/PriceSlider';
 import ContentList from './components/ContentList';
-import './styles/global.css';
+import './styles/main.less';
 
 const App = () => {
   const dispatch = useAppDispatch();
@@ -16,7 +16,7 @@ const App = () => {
 
   // Load content items on mount
   useEffect(() => {
-    dispatch(loadContentItems());
+    dispatch(loadApiItems());
   }, [dispatch]);
 
   // Initialize filters from URL on mount

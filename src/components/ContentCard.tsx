@@ -1,12 +1,13 @@
-import { ContentItem, PricingOption } from '../types';
-
-interface ContentCardProps {
-  item: ContentItem;
-}
+import type { ContentCardProps } from '../types';
+import { PricingOption } from '../types';
 
 const ContentCard = ({ item }: ContentCardProps) => {
   const getPricingDisplay = () => {
-    switch (item.pricingOption) {
+    // Convert to number to ensure proper comparison
+    const pricingValue =
+      typeof item.pricingOption === 'number' ? item.pricingOption : Number(item.pricingOption);
+
+    switch (pricingValue) {
       case PricingOption.PAID:
         return <span className="content-card-pricing pricing-paid">${item.price}</span>;
       case PricingOption.FREE:
@@ -19,9 +20,9 @@ const ContentCard = ({ item }: ContentCardProps) => {
   };
   return (
     <div className="content-card">
-      <img src={item.photo} alt={item.title} className="content-card-image" loading="lazy" />
+      <img src={item.imagePath} alt={item.title} className="content-card-image" loading="lazy" />
       <div className="content-card-body">
-        <div className="content-card-user">{item.userName}</div>
+        <div className="content-card-user">{item.creator}</div>
         <h3 className="content-card-title">{item.title}</h3>
         <div className="content-card-footer">{getPricingDisplay()}</div>
       </div>

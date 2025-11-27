@@ -1,32 +1,32 @@
-import { ContentItem, PricingOption, SortOption } from '../types';
+import { ApiItem, PricingOption, SortOption } from '../types';
 
 export const filterByPricingOptions = (
-  items: ContentItem[],
+  items: ApiItem[],
   pricingOptions: PricingOption[]
-): ContentItem[] => {
+): ApiItem[] => {
   if (pricingOptions.length === 0) {
     return items;
   }
   return items.filter((item) => pricingOptions.includes(item.pricingOption));
 };
 
-export const filterByKeyword = (items: ContentItem[], keyword: string): ContentItem[] => {
+export const filterByKeyword = (items: ApiItem[], keyword: string): ApiItem[] => {
   if (!keyword.trim()) {
     return items;
   }
   const lowerKeyword = keyword.toLowerCase();
   return items.filter(
     (item) =>
-      item.userName.toLowerCase().includes(lowerKeyword) ||
+      item.creator.toLowerCase().includes(lowerKeyword) ||
       item.title.toLowerCase().includes(lowerKeyword)
   );
 };
 
 export const filterByPriceRange = (
-  items: ContentItem[],
+  items: ApiItem[],
   priceRange: [number, number],
   isPaidSelected: boolean
-): ContentItem[] => {
+): ApiItem[] => {
   if (!isPaidSelected) {
     return items;
   }
@@ -38,12 +38,12 @@ export const filterByPriceRange = (
   });
 };
 
-export const sortItems = (items: ContentItem[], sortBy: SortOption): ContentItem[] => {
+export const sortItems = (items: ApiItem[], sortBy: SortOption): ApiItem[] => {
   const sorted = [...items];
 
   switch (sortBy) {
     case SortOption.ITEM_NAME:
-      return sorted.sort((a, b) => a.title.localeCompare(b.title));
+      return sorted.sort((a, b) => a.title.localeCompare(b.title, 'en'));
     case SortOption.PRICE_HIGH:
       return sorted.sort((a, b) => {
         const priceA = a.price ?? 0;
@@ -62,12 +62,12 @@ export const sortItems = (items: ContentItem[], sortBy: SortOption): ContentItem
 };
 
 export const applyFiltersAndSort = (
-  items: ContentItem[],
+  items: ApiItem[],
   pricingOptions: PricingOption[],
   keyword: string,
   sortBy: SortOption,
   priceRange: [number, number]
-): ContentItem[] => {
+): ApiItem[] => {
   let filtered = items;
 
   //Apply pricing options filter

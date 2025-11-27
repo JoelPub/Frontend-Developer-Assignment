@@ -1,20 +1,15 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { ContentItem } from '../../types';
-import { fetchContentItems } from '../../services/api';
+import type { ContentState } from '../../types';
+import { fetchApiItems } from '../../services/api';
 
-interface ContentState {
-  items: ContentItem[];
-  loading: boolean;
-  error: string | null;
-}
 const initialState: ContentState = {
   items: [],
   loading: false,
   error: null,
 };
 
-export const loadContentItems = createAsyncThunk('content/loadContentItems', async () => {
-  const items = await fetchContentItems();
+export const loadApiItems = createAsyncThunk('content/loadApiItems', async () => {
+  const items = await fetchApiItems();
   return items;
 });
 
@@ -24,15 +19,15 @@ const contentSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(loadContentItems.pending, (state) => {
+      .addCase(loadApiItems.pending, (state) => {
         state.loading = true;
         state.error = null;
       })
-      .addCase(loadContentItems.fulfilled, (state, action) => {
+      .addCase(loadApiItems.fulfilled, (state, action) => {
         state.loading = false;
         state.items = action.payload;
       })
-      .addCase(loadContentItems.rejected, (state, action) => {
+      .addCase(loadApiItems.rejected, (state, action) => {
         state.loading = false;
         state.error = action.error.message || 'Failed to load content';
       });
